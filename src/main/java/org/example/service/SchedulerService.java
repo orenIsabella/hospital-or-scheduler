@@ -17,7 +17,7 @@ public class SchedulerService {
     private final OperationWaitingQueue waitingQueue = new OperationWaitingQueue();
 
     public SchedulerService() {
-        // Initializing operating rooms with their equipment, if the equipmnet needs to be changed it can be changed here
+        //Initializing operating rooms with their equipment, if the equipmnet needs to be changed it can be changed here
         operatingRooms.addAll(DEFAULT_OPERATING_ROOMS);
     }
 

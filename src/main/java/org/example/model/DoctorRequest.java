@@ -2,11 +2,13 @@ package org.example.model;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import static org.example.util.DoctorRequestConstants.*;
 
 public class DoctorRequest {
-    @NotNull(message = "The doctor type is required. Valid values: HEART or BRAIN.")
+
+    @NotNull(message = DOCTOR_TYPE_ISSUE)
     private DoctorType doctorType;
-    @NotBlank(message = "Please provide the doctor's name.")
+    @NotBlank(message = DOCTOR_NAME_REQUIERED)
     private String doctorName;
 
     public DoctorRequest() {}
