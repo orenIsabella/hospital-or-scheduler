@@ -26,11 +26,21 @@ public class OperationWaitingQueue {
         return -1;
     }
 
+    public void remove(DoctorRequest request) {
+        if (request != null) {
+            waitingQueue.remove(request);
+        }
+    }
+
     public boolean contains(DoctorRequest request) {
         return waitingQueue.contains(request);
     }
 
     public List<DoctorRequest> getWaitingQueue() {
         return List.copyOf(waitingQueue);
+    }
+
+    public boolean isEmpty() {
+        return waitingQueue.isEmpty();
     }
 }

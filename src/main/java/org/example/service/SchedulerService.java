@@ -22,8 +22,8 @@ public class SchedulerService {
     }
 
     public synchronized Object requestSlot(DoctorRequest request) {
+        checkQueue();
         Optional<OperationSlot> slot = findAvailableSlot(request);
-
         if (slot.isPresent()) {
             ScheduledOperation op = new ScheduledOperation(
                     request.getDoctorName(),
@@ -45,6 +45,27 @@ public class SchedulerService {
             );
         }
     }
+
+    public void checkQueue() {
+        if (waitingQueue.isEmpty()) return;
+        List<DoctorRequest> toRemove = new ArrayList<>();
+        for (DoctorRequest req : waitingQueue.getWaitingQueue()) {
+            Optional<OperationSlot> slot = findAvailableSlot(req);
+            if (slot.isPresent()) {
+                ScheduledOperation op = new ScheduledOperation(
+                        req.getDoctorName(),
+                        req.getDoctorType(),
+                        slot.get().getRoomId(),
+                        slot.get().getStart(),
+                        slot.get().getEnd()
+                );
+                scheduledOperations.add(op);
+                toRemove.add(req);
+            }
+        }
+        toRemove.forEach(waitingQueue::remove);
+    }
+
 
     //finds the first available slot, if there is no slot available in the next week, it returns an empty Optional
     private Optional<OperationSlot> findAvailableSlot(DoctorRequest request) {
